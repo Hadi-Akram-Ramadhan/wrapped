@@ -163,7 +163,7 @@ p {
   .progress-bar {
     height: 4px;
     padding: 0 2vw;
-    top: 32px;
+    top: 50px;
   }
   .photo-row {
     flex-wrap: wrap;
