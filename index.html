@@ -3,75 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wrapped by Hadi</title>
+    <title>Your Wrapped Journey</title>
+    <link rel="stylesheet" href="css/style.css" />
     <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap"
       rel="stylesheet"
     />
-    <style>
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      body {
-        background-color: #9b5de5;
-        position: relative;
-        overflow: hidden;
-        animation: fadeIn 1s ease-out;
-      }
-      .bg-shapes {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-      }
-      .content {
-        opacity: 0;
-        animation: fadeIn 1s ease-out 0.5s forwards;
-      }
-    </style>
   </head>
-  <body class="min-h-screen flex flex-col items-center justify-center">
-    <svg
-      class="bg-shapes"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1440 810"
-    >
-      <path
-        fill="#00F5D4"
-        fill-opacity="0.3"
-        d="M0,224L48,229.3C96,235,192,245,288,240C384,235,480,213,576,186.7C672,160,768,128,864,122.7C960,117,1056,139,1152,154.7C1248,171,1344,181,1392,186.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-      ></path>
-      <path
-        fill="#FB5607"
-        fill-opacity="0.2"
-        d="M0,160L48,176C96,192,192,224,288,229.3C384,235,480,213,576,186.7C672,160,768,128,864,133.3C960,139,1056,181,1152,197.3C1248,213,1344,203,1392,197.3L1440,192L1440,480L1392,480C1344,480,1248,480,1152,480C1056,480,960,480,864,480C768,480,672,480,576,480C480,480,384,480,288,480C192,480,96,480,48,480L0,480Z"
-      ></path>
-      <path
-        fill="#9B5DE5"
-        fill-opacity="0.1"
-        d="M0,288L48,304C96,320,192,352,288,362.7C384,373,480,363,576,336C672,309,768,267,864,261.3C960,256,1056,288,1152,304C1248,320,1344,320,1392,320L1440,320L1440,640L1392,640C1344,640,1248,640,1152,640C1056,640,960,640,864,640C768,640,672,640,576,640C480,640,384,640,288,640C192,640,96,640,48,640L0,640Z"
-      ></path>
-    </svg>
-    <div class="text-center relative z-10 content">
-      <h1 class="text-5xl font-extrabold text-white mb-6 drop-shadow-lg">
-        Wrapped by Hadi
-      </h1>
-      <p class="text-xl text-white mb-8">
-        Yuk, liat rangkuman musik lo tahun ini!<br />Langsung klik mulai buat
-        ngerasain vibes Spotify Wrapped versi lokal!
-      </p>
-      <a
-        href="page1.html"
-        class="px-8 py-3 bg-white text-purple-700 font-bold rounded-full shadow-lg hover:bg-purple-100 transition"
-        >Mulai</a
-      >
+  <body>
+    <div class="progress-container">
+      <div class="progress-bar"></div>
     </div>
+
+    <div class="slideshow-container">
+      <div class="slide active" data-slide="1">
+        <div class="content">
+          <h1>Your Journey Begins</h1>
+          <div class="animated-blob"></div>
+        </div>
+      </div>
+
+      <div class="slide" data-slide="2">
+        <div class="content">
+          <h2>Top 5 Moments</h2>
+          <div class="moments-list">
+            <div class="moment">Moment 1</div>
+            <div class="moment">Moment 2</div>
+            <div class="moment">Moment 3</div>
+            <div class="moment">Moment 4</div>
+            <div class="moment">Moment 5</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide" data-slide="3">
+        <div class="content">
+          <h2>Your Favorite Song</h2>
+          <div class="song-card">
+            <div class="album-art"></div>
+            <h3>Song Title</h3>
+            <p>Artist Name</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide" data-slide="4">
+        <div class="content">
+          <h2>Share Your Journey</h2>
+          <button class="share-btn">Share Now</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/main.js"></script>
   </body>
 </html>
