@@ -98,15 +98,19 @@ function getTapSide(e) {
 function setupNav() {
   let isTouching = false;
   let startX = 0;
+  let startY = 0;
   let endX = 0;
+  let endY = 0;
 
   document.body.addEventListener("touchstart", (e) => {
     isTouching = true;
     startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
   });
 
   document.body.addEventListener("touchmove", (e) => {
     endX = e.touches[0].clientX;
+    endY = e.touches[0].clientY;
   });
 
   document.body.addEventListener("touchend", (e) => {
@@ -114,19 +118,35 @@ function setupNav() {
       return;
 
     const diffX = startX - endX;
+    const diffY = startY - endY;
+    const absDiffX = Math.abs(diffX);
+    const absDiffY = Math.abs(diffY);
 
-    // Swipe kanan (balik slide)
-    if (diffX < -50) {
-      prevSlide();
+    // Prioritaskan gerakan horizontal
+    if (absDiffX > absDiffY && absDiffX > 50) {
+      // Swipe kanan (balik slide)
+      if (diffX < 0) {
+        prevSlide();
+      }
+      // Swipe kiri (maju slide)
+      else {
+        nextSlide();
+      }
     }
-    // Swipe kiri (maju slide)
-    else if (diffX > 50) {
+    // Kalo gerakan vertikal lebih dominan, coba next slide
+    else if (absDiffY > 50) {
       nextSlide();
     }
     // Default tap maju
     else {
       nextSlide();
     }
+
+    // Reset touch state
+    startX = 0;
+    startY = 0;
+    endX = 0;
+    endY = 0;
 
     setTimeout(() => {
       isTouching = false;
