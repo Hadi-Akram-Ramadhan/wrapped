@@ -48,7 +48,7 @@ function setActiveSlide(idx) {
   setTimeout(() => {
     current = idx;
     isTransitioning = false;
-  }, 700); // match CSS transition
+  }, 150); // makin sat set
 }
 
 function updateProgressBar(idx) {
