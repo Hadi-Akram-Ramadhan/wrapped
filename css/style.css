@@ -163,7 +163,7 @@ p {
   .progress-bar {
     height: 4px;
     padding: 0 2vw;
-    top: 50px;
+    top: 42px;
     z-index: 9999 !important;
   }
   .photo-row {
