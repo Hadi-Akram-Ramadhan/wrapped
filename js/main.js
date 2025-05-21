@@ -120,6 +120,7 @@ function setupNav() {
     }, 100);
   });
   document.body.addEventListener("click", (e) => {
+    if (window.innerWidth < 700) return;
     if (isTouching) return;
     if (e.target.classList.contains("cta")) return;
     if (e.target.closest(".photo-frame")) return;
