@@ -97,72 +97,35 @@ function getTapSide(e) {
 
 // Tap/click/keyboard navigation
 function setupNav() {
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  document.body.addEventListener(
-    "touchstart",
-    (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    },
-    false
-  );
-
-  document.body.addEventListener(
-    "touchend",
-    (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    },
-    false
-  );
-
-  function handleSwipe() {
-    const swipeDistance = touchEndX - touchStartX;
-    const swipeThreshold = window.innerWidth * 0.2; // 20% lebar layar
-
+  // Handler untuk tap/click navigasi
+  function handleNavigation(e) {
     // Hindari navigasi di elemen spesifik
-    const target = event.target;
     if (
-      target.closest(".photo-frame") ||
-      target.classList.contains("cta") ||
-      target.closest(".cta")
-    ) {
+      e.target.closest(".photo-frame") ||
+      e.target.classList.contains("cta") ||
+      e.target.closest(".cta")
+    )
       return;
-    }
 
-    // Logika swipe
-    if (Math.abs(swipeDistance) > swipeThreshold) {
-      if (swipeDistance > 0) {
-        // Swipe kanan (balik)
-        prevSlide();
-      } else {
-        // Swipe kiri (maju)
-        nextSlide();
-      }
+    // Dapatkan posisi tap
+    const tapX = e.touches ? e.touches[0].clientX : e.clientX;
+    const screenWidth = window.innerWidth;
+
+    // Bagi layar jadi 2 zona
+    if (tapX < screenWidth * 0.4) {
+      // Tap kiri: balik slide
+      prevSlide();
+    } else if (tapX > screenWidth * 0.6) {
+      // Tap kanan: maju slide
+      nextSlide();
     }
   }
 
-  // Tambahan click handler untuk desktop
-  document.body.addEventListener("click", (e) => {
-    const target = e.target;
-    if (
-      target.closest(".photo-frame") ||
-      target.classList.contains("cta") ||
-      target.closest(".cta")
-    ) {
-      return;
-    }
+  // Touch events untuk mobile
+  document.body.addEventListener("touchend", handleNavigation);
 
-    const tapX = e.clientX;
-    const screenWidth = window.innerWidth;
-
-    if (tapX < screenWidth * 0.3) {
-      prevSlide();
-    } else if (tapX > screenWidth * 0.7) {
-      nextSlide();
-    }
-  });
+  // Click events untuk desktop dan mobile
+  document.body.addEventListener("click", handleNavigation);
 
   // Keyboard navigation tetap sama
   document.body.addEventListener("keydown", (e) => {

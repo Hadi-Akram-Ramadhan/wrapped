@@ -222,7 +222,7 @@ p {
     cursor: pointer;
   }
   .slideshow {
-    touch-action: pan-x;
+    touch-action: none;
   }
   .photo-row {
     touch-action: pan-y;
