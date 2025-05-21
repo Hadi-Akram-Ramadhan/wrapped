@@ -98,18 +98,41 @@ function getTapSide(e) {
 function setupNav() {
   let isTouching = false;
   let startX = 0;
+  let endX = 0;
+
   document.body.addEventListener("touchstart", (e) => {
     isTouching = true;
     startX = e.touches[0].clientX;
   });
+
+  document.body.addEventListener("touchmove", (e) => {
+    endX = e.touches[0].clientX;
+  });
+
   document.body.addEventListener("touchend", (e) => {
     if (e.target.closest(".photo-frame") || e.target.classList.contains("cta"))
       return;
-    nextSlide();
+
+    const diffX = startX - endX;
+
+    // Swipe kanan (balik slide)
+    if (diffX < -50) {
+      prevSlide();
+    }
+    // Swipe kiri (maju slide)
+    else if (diffX > 50) {
+      nextSlide();
+    }
+    // Default tap maju
+    else {
+      nextSlide();
+    }
+
     setTimeout(() => {
       isTouching = false;
     }, 100);
   });
+
   document.body.addEventListener("click", (e) => {
     if (window.innerWidth < 700) return;
     if (isTouching) return;
@@ -119,6 +142,7 @@ function setupNav() {
     if (side === "left") prevSlide();
     else nextSlide();
   });
+
   document.body.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === " ") nextSlide();
     if (e.key === "ArrowLeft") prevSlide();
