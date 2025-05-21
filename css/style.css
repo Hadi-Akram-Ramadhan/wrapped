@@ -219,14 +219,23 @@ p {
   .slide {
     touch-action: manipulation;
     user-select: none;
+    pointer-events: auto;
+  }
+  .slideshow {
+    touch-action: manipulation;
   }
   .photo-row {
     touch-action: pan-x pan-y;
     cursor: pointer;
+    pointer-events: none;
   }
   .photo-frame {
     touch-action: manipulation;
     cursor: pointer;
+    pointer-events: auto;
+  }
+  body {
+    touch-action: manipulation;
   }
 }
 
