@@ -80,7 +80,7 @@ html {
   top: 0;
   left: 0;
   opacity: 0;
-  pointer-events: none;
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -215,6 +215,18 @@ p {
     bottom: 4vw;
     border-radius: 10px;
     z-index: 10;
+  }
+  .slide {
+    touch-action: manipulation;
+    user-select: none;
+  }
+  .photo-row {
+    touch-action: pan-x pan-y;
+    cursor: pointer;
+  }
+  .photo-frame {
+    touch-action: manipulation;
+    cursor: pointer;
   }
 }
 
