@@ -97,18 +97,16 @@ function getTapSide(e) {
 // Tap/click/keyboard navigation
 function setupNav() {
   let isTouching = false;
+  let startX = 0;
   document.body.addEventListener("touchstart", (e) => {
     isTouching = true;
+    startX = e.touches[0].clientX;
   });
   document.body.addEventListener("touchend", (e) => {
-    let dx =
-      e.changedTouches[0].clientX -
-      (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+    let dx = e.changedTouches[0].clientX - startX;
     if (Math.abs(dx) < 10) {
-      const side =
-        e.changedTouches[0].clientX < window.innerWidth * 0.4
-          ? "left"
-          : "right";
+      // tap, bukan swipe
+      const side = startX < window.innerWidth * 0.4 ? "left" : "right";
       if (side === "left") prevSlide();
       else nextSlide();
     } else {
