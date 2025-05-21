@@ -103,16 +103,9 @@ function setupNav() {
     startX = e.touches[0].clientX;
   });
   document.body.addEventListener("touchend", (e) => {
-    let dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) < 10) {
-      // tap, bukan swipe
-      const side = startX < window.innerWidth * 0.4 ? "left" : "right";
-      if (side === "left") prevSlide();
-      else nextSlide();
-    } else {
-      if (dx < -40) nextSlide();
-      if (dx > 40) prevSlide();
-    }
+    if (e.target.closest(".photo-frame") || e.target.classList.contains("cta"))
+      return;
+    nextSlide();
     setTimeout(() => {
       isTouching = false;
     }, 100);
