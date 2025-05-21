@@ -217,25 +217,23 @@ p {
     z-index: 10;
   }
   .slide {
-    touch-action: manipulation;
+    touch-action: none;
     user-select: none;
-    pointer-events: auto;
+    cursor: pointer;
   }
   .slideshow {
-    touch-action: manipulation;
+    touch-action: pan-x;
   }
   .photo-row {
-    touch-action: pan-x pan-y;
-    cursor: pointer;
+    touch-action: pan-y;
     pointer-events: none;
   }
   .photo-frame {
     touch-action: manipulation;
-    cursor: pointer;
     pointer-events: auto;
   }
   body {
-    touch-action: manipulation;
+    touch-action: pan-x;
   }
 }
 

@@ -97,54 +97,69 @@ function getTapSide(e) {
 
 // Tap/click/keyboard navigation
 function setupNav() {
-  // Khusus mobile navigation
-  function handleMobileNavigation(e) {
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  document.body.addEventListener(
+    "touchstart",
+    (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    },
+    false
+  );
+
+  document.body.addEventListener(
+    "touchend",
+    (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    },
+    false
+  );
+
+  function handleSwipe() {
+    const swipeDistance = touchEndX - touchStartX;
+    const swipeThreshold = window.innerWidth * 0.2; // 20% lebar layar
+
     // Hindari navigasi di elemen spesifik
-    if (e.target.closest(".photo-frame") || e.target.classList.contains("cta"))
+    const target = event.target;
+    if (
+      target.closest(".photo-frame") ||
+      target.classList.contains("cta") ||
+      target.closest(".cta")
+    ) {
       return;
+    }
 
-    // Dapatkan posisi tap
-    const tapX = e.touches ? e.touches[0].clientX : e.clientX;
-    const screenWidth = window.innerWidth;
-
-    // Bagi layar jadi 3 zona
-    const leftZone = screenWidth * 0.3;
-    const rightZone = screenWidth * 0.7;
-
-    // Logic navigasi
-    if (tapX < leftZone) {
-      // Tap di zona kiri: balik slide
-      prevSlide();
-    } else if (tapX > rightZone) {
-      // Tap di zona kanan: maju slide
-      nextSlide();
-    } else {
-      // Tap di zona tengah: default maju slide
-      nextSlide();
+    // Logika swipe
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance > 0) {
+        // Swipe kanan (balik)
+        prevSlide();
+      } else {
+        // Swipe kiri (maju)
+        nextSlide();
+      }
     }
   }
 
-  // Touch events khusus mobile
-  document.body.addEventListener("touchstart", (e) => {
-    handleMobileNavigation(e);
-  });
-
-  // Click events untuk desktop
+  // Tambahan click handler untuk desktop
   document.body.addEventListener("click", (e) => {
-    // Pastikan ini bukan touch event
-    if (e.pointerType === "touch") return;
+    const target = e.target;
+    if (
+      target.closest(".photo-frame") ||
+      target.classList.contains("cta") ||
+      target.closest(".cta")
+    ) {
+      return;
+    }
 
     const tapX = e.clientX;
     const screenWidth = window.innerWidth;
 
-    const leftZone = screenWidth * 0.3;
-    const rightZone = screenWidth * 0.7;
-
-    if (tapX < leftZone) {
+    if (tapX < screenWidth * 0.3) {
       prevSlide();
-    } else if (tapX > rightZone) {
-      nextSlide();
-    } else {
+    } else if (tapX > screenWidth * 0.7) {
       nextSlide();
     }
   });
