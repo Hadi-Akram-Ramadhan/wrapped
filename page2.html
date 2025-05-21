@@ -3,12 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wrapped - Page 2</title>
+    <title>Wrapped by Hadi - Page 2</title>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
     <style>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
       .progress-bar-spotify {
         position: fixed;
         top: 0;
@@ -25,48 +33,84 @@
         width: 0%;
         transition: width 3s cubic-bezier(0.4, 0, 0.2, 1);
       }
+      body {
+        background-color: #fb5607;
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 1s ease-out;
+      }
+      .bg-shapes {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+      .content {
+        opacity: 0;
+        animation: fadeIn 1s ease-out 0.5s forwards;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
     </style>
   </head>
-  <body
-    class="bg-gradient-to-br from-purple-800 via-yellow-400 to-pink-600 min-h-screen flex flex-col items-center justify-center"
-  >
+  <body class="min-h-screen flex flex-col items-center justify-center">
     <div class="progress-bar-spotify">
       <div id="progress" class="progress-bar-inner"></div>
     </div>
-    <div class="text-center animate-fade-in-up">
-      <h2 class="text-3xl font-bold text-white mb-4 drop-shadow">
-        Top Genre Lo
-      </h2>
-      <p class="text-lg text-white mb-8">🎧 Pop</p>
-      <h2 class="text-3xl font-bold text-white mb-4 drop-shadow">
-        Top Artist Lo
-      </h2>
-      <p class="text-lg text-white mb-8">🔥 Rich Brian</p>
-      <h2 class="text-3xl font-bold text-white mb-4 drop-shadow">
-        Top Song Lo
-      </h2>
-      <p class="text-lg text-white mb-8">"Drive Safe" - Rich Brian</p>
-      <a
-        href="page3.html"
-        class="px-8 py-3 bg-white text-yellow-700 font-bold rounded-full shadow-lg hover:bg-pink-400 transition"
-        >Next</a
+    <svg
+      class="bg-shapes"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1440 810"
+    >
+      <path
+        fill="#00F5D4"
+        fill-opacity="0.2"
+        d="M0,64L48,96C96,128,192,192,288,224C384,256,480,256,576,234.7C672,213,768,171,864,154.7C960,139,1056,149,1152,176C1248,203,1344,245,1392,266.7L1440,288L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+      ></path>
+      <path
+        fill="#FB5607"
+        fill-opacity="0.15"
+        d="M0,160L48,192C96,224,192,288,288,309.3C384,331,480,309,576,272C672,235,768,181,864,160C960,139,1056,149,1152,176C1248,203,1344,245,1392,266.7L1440,288L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+      ></path>
+      <path
+        fill="#00BBF9"
+        fill-opacity="0.1"
+        d="M0,256L48,277.3C96,299,192,341,288,352C384,363,480,341,576,309.3C672,277,768,235,864,224C960,213,1056,235,1152,256C1248,277,1344,299,1392,309.3L1440,320L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+      ></path>
+    </svg>
+    <div class="text-center relative z-10 content">
+      <h1
+        class="text-4xl md:text-5xl font-extrabold text-white mb-6 drop-shadow-lg"
       >
+        Top Artist Lo Tahun Ini
+      </h1>
+      <p class="text-lg md:text-xl text-white mb-8">
+        Artist favorit yang selalu ada di playlist lo!
+      </p>
+      <div class="bg-white bg-opacity-20 rounded-xl p-6 mb-8">
+        <h2 class="text-3xl font-bold text-white mb-4">Arctic Monkeys</h2>
+        <p class="text-white">
+          Lo paling sering dengerin Arctic Monkeys tahun ini!
+        </p>
+      </div>
+      <div class="flex justify-between">
+        <a
+          href="page1.html"
+          class="px-6 py-2 bg-white text-orange-600 font-bold rounded-full shadow-lg hover:bg-orange-50 transition"
+        >
+          Kembali
+        </a>
+        <a
+          href="page3.html"
+          class="px-6 py-2 bg-white text-orange-600 font-bold rounded-full shadow-lg hover:bg-orange-50 transition"
+        >
+          Lanjut
+        </a>
+      </div>
     </div>
-    <style>
-      @keyframes fade-in-up {
-        0% {
-          opacity: 0;
-          transform: translateY(40px);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .animate-fade-in-up {
-        animation: fade-in-up 1s cubic-bezier(0.4, 0, 0.2, 1) both;
-      }
-    </style>
     <script src="progress.js"></script>
   </body>
 </html>
