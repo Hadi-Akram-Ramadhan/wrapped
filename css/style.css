@@ -173,3 +173,86 @@ p {
     padding: 0 6px;
   }
 }
+
+.next-hint {
+  position: absolute;
+  right: 24px;
+  bottom: 32px;
+  font-size: 1rem;
+  color: #ffe600;
+  background: rgba(34, 34, 59, 0.85);
+  padding: 8px 18px;
+  border-radius: 24px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 12px #0003;
+  z-index: 10;
+  animation: hintBlink 1.2s infinite alternate,
+    hintSlideIn 0.7s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+@keyframes hintBlink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+@keyframes hintSlideIn {
+  from {
+    transform: translateY(40px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.photo-frame {
+  position: absolute;
+  box-shadow: 0 4px 24px #0002, 0 1.5px 8px #0003;
+  border-radius: 18px;
+  background: #fff;
+  overflow: hidden;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #fff;
+  transition: box-shadow 0.2s;
+  width: auto;
+  height: auto;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: unset;
+  border-radius: 14px;
+  display: block;
+}
+
+.photo-frame.size-md {
+  max-width: 240px;
+  max-height: 240px;
+}
+
+.photo-frame.size-sm {
+  max-width: 140px;
+  max-height: 140px;
+  border-width: 2px;
+}
+
+@media (max-width: 600px) {
+  .photo-frame.size-md {
+    max-width: 140px;
+    max-height: 140px;
+  }
+  .photo-frame.size-sm {
+    max-width: 90px;
+    max-height: 90px;
+  }
+}
