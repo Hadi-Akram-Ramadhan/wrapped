@@ -29,13 +29,24 @@ function setActiveSlide(idx) {
   isTransitioning = true;
   slides[current].classList.remove("active");
   slides[idx].classList.add("active");
-  // Progress bar muncul pas masuk slide 1
-  if (idx > 0) {
+
+  // Progress bar muncul di semua slide kecuali slide pertama pas init
+  if (idx >= 0 && started) {
     progressBar.classList.add("show");
-  } else {
+  } else if (idx === 0 && !started) {
+    // Biarin disembunyiin pas init slide 0
     progressBar.classList.remove("show");
-    started = false; // reset started biar bisa next lagi dari awal
+  } else if (idx > 0 && !started) {
+    // Kasus ketika langsung ke slide > 0 dari awal
+    started = true;
+    progressBar.classList.add("show");
   }
+
+  // Reset started kalau balik ke slide 0
+  if (idx === 0) {
+    started = false;
+  }
+
   // Ganti background body
   const bg = slides[idx].getAttribute("data-bg");
   document.body.style.background = bg;
