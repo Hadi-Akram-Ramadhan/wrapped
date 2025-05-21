@@ -1,0 +1,175 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Montserrat", sans-serif;
+  background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%);
+  overflow: hidden;
+}
+
+.slideshow {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 100vw;
+  height: 6px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+  padding: 0 16px;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s cubic-bezier(0.77, 0, 0.18, 1),
+    transform 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.progress-bar.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.progress-segment {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+  box-shadow: 0 2px 8px #0002;
+}
+
+.progress-segment.active .progress-inner {
+  animation: progressBar 3s linear forwards;
+}
+
+.progress-inner {
+  background: #fff;
+  height: 100%;
+  width: 0%;
+  border-radius: 4px;
+  transition: width 0.3s;
+  box-shadow: 0 0 8px #fff, 0 2px 8px #fff8;
+}
+
+@keyframes progressBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.slide {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.7s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 16px #7f00ff99;
+  letter-spacing: 1px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #ffe600;
+  font-weight: 700;
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.cta {
+  background: linear-gradient(90deg, #ffe600, #00eaff, #ff00ea);
+  color: #222;
+  font-weight: 900;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 32px;
+  padding: 16px 32px;
+  cursor: pointer;
+  box-shadow: 0 4px 24px #ff00ea55;
+  margin-top: 24px;
+  transition: transform 0.2s;
+}
+
+.cta:active {
+  transform: scale(0.97);
+}
+
+.blob {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  background: linear-gradient(135deg, #00eaff 0%, #ff00ea 100%);
+  border-radius: 50% 40% 60% 50%/60% 50% 40% 50%;
+  filter: blur(32px) brightness(1.2);
+  opacity: 0.7;
+  z-index: 0;
+  animation: blobMove 8s infinite alternate cubic-bezier(0.77, 0, 0.18, 1);
+  transform: translateX(-50%);
+}
+
+@keyframes blobMove {
+  0% {
+    border-radius: 50% 40% 60% 50%/60% 50% 40% 50%;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    border-radius: 60% 50% 40% 60%/50% 60% 50% 40%;
+    transform: translateX(-50%) scale(1.1) rotate(10deg);
+  }
+  100% {
+    border-radius: 40% 60% 50% 60%/60% 40% 60% 50%;
+    transform: translateX(-50%) scale(0.95) rotate(-8deg);
+  }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+  .blob {
+    width: 180px;
+    height: 180px;
+  }
+  .progress-bar {
+    top: 12px;
+    height: 4px;
+    padding: 0 6px;
+  }
+}
