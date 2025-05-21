@@ -97,73 +97,59 @@ function getTapSide(e) {
 
 // Tap/click/keyboard navigation
 function setupNav() {
-  let isTouching = false;
-  let startX = 0;
-  let startY = 0;
-  let endX = 0;
-  let endY = 0;
-
-  document.body.addEventListener("touchstart", (e) => {
-    isTouching = true;
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-  });
-
-  document.body.addEventListener("touchmove", (e) => {
-    endX = e.touches[0].clientX;
-    endY = e.touches[0].clientY;
-  });
-
-  document.body.addEventListener("touchend", (e) => {
+  // Khusus mobile navigation
+  function handleMobileNavigation(e) {
+    // Hindari navigasi di elemen spesifik
     if (e.target.closest(".photo-frame") || e.target.classList.contains("cta"))
       return;
 
-    const diffX = startX - endX;
-    const diffY = startY - endY;
-    const absDiffX = Math.abs(diffX);
-    const absDiffY = Math.abs(diffY);
+    // Dapatkan posisi tap
+    const tapX = e.touches ? e.touches[0].clientX : e.clientX;
+    const screenWidth = window.innerWidth;
 
-    // Prioritaskan gerakan horizontal
-    if (absDiffX > absDiffY && absDiffX > 50) {
-      // Swipe kanan (balik slide)
-      if (diffX < 0) {
-        prevSlide();
-      }
-      // Swipe kiri (maju slide)
-      else {
-        nextSlide();
-      }
-    }
-    // Kalo gerakan vertikal lebih dominan, coba next slide
-    else if (absDiffY > 50) {
+    // Bagi layar jadi 3 zona
+    const leftZone = screenWidth * 0.3;
+    const rightZone = screenWidth * 0.7;
+
+    // Logic navigasi
+    if (tapX < leftZone) {
+      // Tap di zona kiri: balik slide
+      prevSlide();
+    } else if (tapX > rightZone) {
+      // Tap di zona kanan: maju slide
+      nextSlide();
+    } else {
+      // Tap di zona tengah: default maju slide
       nextSlide();
     }
-    // Default tap maju
-    else {
-      nextSlide();
-    }
+  }
 
-    // Reset touch state
-    startX = 0;
-    startY = 0;
-    endX = 0;
-    endY = 0;
-
-    setTimeout(() => {
-      isTouching = false;
-    }, 100);
+  // Touch events khusus mobile
+  document.body.addEventListener("touchstart", (e) => {
+    handleMobileNavigation(e);
   });
 
+  // Click events untuk desktop
   document.body.addEventListener("click", (e) => {
-    if (isTouching) return;
-    if (e.target.classList.contains("cta")) return;
-    if (e.target.closest(".photo-frame")) return;
+    // Pastikan ini bukan touch event
+    if (e.pointerType === "touch") return;
 
-    const side = getTapSide(e);
-    if (side === "left") prevSlide();
-    else nextSlide();
+    const tapX = e.clientX;
+    const screenWidth = window.innerWidth;
+
+    const leftZone = screenWidth * 0.3;
+    const rightZone = screenWidth * 0.7;
+
+    if (tapX < leftZone) {
+      prevSlide();
+    } else if (tapX > rightZone) {
+      nextSlide();
+    } else {
+      nextSlide();
+    }
   });
 
+  // Keyboard navigation tetap sama
   document.body.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === " ") nextSlide();
     if (e.key === "ArrowLeft") prevSlide();
