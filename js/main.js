@@ -122,6 +122,7 @@ function setupNav() {
   document.body.addEventListener("click", (e) => {
     if (isTouching) return;
     if (e.target.classList.contains("cta")) return;
+    if (e.target.closest(".photo-frame")) return;
     const side = getTapSide(e);
     if (side === "left") prevSlide();
     else nextSlide();
