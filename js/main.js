@@ -96,7 +96,31 @@ function getTapSide(e) {
 
 // Tap/click/keyboard navigation
 function setupNav() {
+  let isTouching = false;
+  document.body.addEventListener("touchstart", (e) => {
+    isTouching = true;
+  });
+  document.body.addEventListener("touchend", (e) => {
+    let dx =
+      e.changedTouches[0].clientX -
+      (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+    if (Math.abs(dx) < 10) {
+      const side =
+        e.changedTouches[0].clientX < window.innerWidth * 0.4
+          ? "left"
+          : "right";
+      if (side === "left") prevSlide();
+      else nextSlide();
+    } else {
+      if (dx < -40) nextSlide();
+      if (dx > 40) prevSlide();
+    }
+    setTimeout(() => {
+      isTouching = false;
+    }, 100);
+  });
   document.body.addEventListener("click", (e) => {
+    if (isTouching) return;
     if (e.target.classList.contains("cta")) return;
     const side = getTapSide(e);
     if (side === "left") prevSlide();
@@ -105,23 +129,6 @@ function setupNav() {
   document.body.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === " ") nextSlide();
     if (e.key === "ArrowLeft") prevSlide();
-  });
-  // Touch/swipe
-  let startX = 0;
-  document.body.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-  });
-  document.body.addEventListener("touchend", (e) => {
-    let dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) < 10) {
-      // tap, bukan swipe
-      const side = startX < window.innerWidth * 0.4 ? "left" : "right";
-      if (side === "left") prevSlide();
-      else nextSlide();
-    } else {
-      if (dx < -40) nextSlide();
-      if (dx > 40) prevSlide();
-    }
   });
 }
 

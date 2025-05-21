@@ -25,9 +25,9 @@ html {
   left: 0;
   width: 100vw;
   height: 6px;
-  display: flex;
+  display: flex !important;
   gap: 8px;
-  z-index: 10;
+  z-index: 5 !important;
   padding: 0 16px;
   box-sizing: border-box;
   opacity: 0;
