@@ -91,7 +91,8 @@ function getTapSide(e) {
   } else {
     x = e.clientX;
   }
-  return x < window.innerWidth * 0.4 ? "left" : "right";
+  // Ubah logika pembagian layar, bagi 2 sama rata
+  return x < window.innerWidth / 2 ? "left" : "right";
 }
 
 // Tap/click/keyboard navigation
@@ -157,6 +158,7 @@ function setupNav() {
     if (isTouching) return;
     if (e.target.classList.contains("cta")) return;
     if (e.target.closest(".photo-frame")) return;
+
     const side = getTapSide(e);
     if (side === "left") prevSlide();
     else nextSlide();
