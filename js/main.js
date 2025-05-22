@@ -30,27 +30,28 @@ function setActiveSlide(idx) {
   slides[current].classList.remove("active");
   slides[idx].classList.add("active");
 
-  // Progress bar muncul di semua slide kecuali slide pertama pas init
-  if (idx >= 0 && started) {
+  // Modifikasi logic progress bar biar selalu visible di mobile
+  if (window.innerWidth <= 600) {
     progressBar.classList.add("show");
-  } else if (idx === 0 && !started) {
-    // Biarin disembunyiin pas init slide 0
-    progressBar.classList.remove("show");
-  } else if (idx > 0 && !started) {
-    // Kasus ketika langsung ke slide > 0 dari awal
-    started = true;
-    progressBar.classList.add("show");
+  } else {
+    // Logic lama untuk desktop
+    if (idx >= 0 && started) {
+      progressBar.classList.add("show");
+    } else if (idx === 0 && !started) {
+      progressBar.classList.remove("show");
+    } else if (idx > 0 && !started) {
+      started = true;
+      progressBar.classList.add("show");
+    }
   }
 
-  // Reset started kalau balik ke slide 0
+  // Sisanya tetap sama
   if (idx === 0) {
     started = false;
   }
 
-  // Ganti background body
   const bg = slides[idx].getAttribute("data-bg");
   document.body.style.background = bg;
-  // Ganti blob style
   const blob = slides[idx].querySelector(".blob");
   const blobBg = slides[idx].getAttribute("data-blob");
   blob.style.background = blobBg;
@@ -59,7 +60,7 @@ function setActiveSlide(idx) {
   setTimeout(() => {
     current = idx;
     isTransitioning = false;
-  }, 150); // makin sat set
+  }, 150);
 }
 
 function updateProgressBar(idx) {
@@ -155,7 +156,77 @@ function setupCTA() {
   }
 }
 
-// Init
+// Tambahkan fungsi untuk membuat navigation hint
+function createNavigationHint() {
+  // Hapus next-hint lama
+  const oldHint = document.querySelector(".next-hint");
+  if (oldHint) oldHint.remove();
+
+  // Buat kontainer hint navigasi baru
+  const navigationHint = document.createElement("div");
+  navigationHint.className = "navigation-hint";
+
+  // Buat arrows
+  const arrowsContainer = document.createElement("div");
+  arrowsContainer.className = "navigation-hint-arrows";
+
+  const leftArrow = document.createElement("div");
+  leftArrow.className = "navigation-hint-arrow left";
+
+  const rightArrow = document.createElement("div");
+  rightArrow.className = "navigation-hint-arrow";
+
+  arrowsContainer.appendChild(leftArrow);
+  arrowsContainer.appendChild(rightArrow);
+
+  // Buat 3 icon hint
+  const progressContainer = document.createElement("div");
+  progressContainer.className = "navigation-hint-progress";
+
+  const leftIcon = document.createElement("div");
+  leftIcon.className = "navigation-hint-icon";
+
+  const centerIcon = document.createElement("div");
+  centerIcon.className = "navigation-hint-icon active";
+
+  const rightIcon = document.createElement("div");
+  rightIcon.className = "navigation-hint-icon";
+
+  progressContainer.appendChild(leftIcon);
+  progressContainer.appendChild(centerIcon);
+  progressContainer.appendChild(rightIcon);
+
+  // Buat teks hint
+  const hintText = document.createElement("div");
+  hintText.className = "navigation-hint-text";
+  hintText.textContent = "Tap kanan!";
+
+  // Susun elemen
+  navigationHint.appendChild(arrowsContainer);
+  navigationHint.appendChild(progressContainer);
+  navigationHint.appendChild(hintText);
+
+  // Tambahkan ke body
+  document.body.appendChild(navigationHint);
+
+  // Animasi hint
+  requestAnimationFrame(() => {
+    navigationHint.classList.add("show");
+  });
+
+  // Hilangkan hint setelah beberapa saat
+  setTimeout(() => {
+    navigationHint.classList.remove("show");
+    navigationHint.classList.add("hide");
+
+    // Hapus elemen setelah animasi selesai
+    setTimeout(() => {
+      navigationHint.remove();
+    }, 500);
+  }, 5000); // Diperpanjang dari 3000 menjadi 5000 milidetik (5 detik)
+}
+
+// Modifikasi init untuk menambahkan navigation hint
 window.addEventListener("DOMContentLoaded", () => {
   renderProgressBar();
   slides[0].classList.add("active");
@@ -168,4 +239,9 @@ window.addEventListener("DOMContentLoaded", () => {
   blob.style.borderRadius = blobShapes[0];
   setupNav();
   setupCTA();
+
+  // Tambahkan navigation hint untuk mobile
+  if (window.innerWidth <= 600) {
+    createNavigationHint();
+  }
 });
