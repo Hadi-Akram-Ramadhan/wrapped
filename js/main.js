@@ -245,3 +245,21 @@ window.addEventListener("DOMContentLoaded", () => {
     createNavigationHint();
   }
 });
+
+// Ganti foto per slide secara dinamis
+function gantiFoto(slideIndex, fotoArr) {
+  // slideIndex mulai dari 1 (bukan 0)
+  fotoArr.forEach((src, i) => {
+    const img = document.querySelector(
+      `img[data-foto='${slideIndex}-${i + 1}']`
+    );
+    if (img) img.src = src;
+  });
+}
+
+// Contoh pemakaian:
+// gantiFoto(2, [
+//   'foto/foto2.jpg', 'foto/foto3.jpg', 'foto/foto4.jpg', 'foto/foto5.jpg', 'foto/foto6.jpg',
+//   'foto/foto7.jpg', 'foto/foto8.jpg', 'foto/foto9.jpg', 'foto/foto10.jpg', 'foto/foto11.jpg'
+// ]);
+// Panggil function ini kapan aja buat update foto di slide tertentu
